@@ -40,6 +40,44 @@
     console.log(iterator.next(), iterator.done);
     console.log(iterator.next(), iterator.done);
     console.log(iterator.next(), iterator.done);
+
+    //////////////////////////////////////////////////
+
+    // Iterating private class properties
+    const familyTree = new class FamilyTree {
+
+      #children = [
+        {
+          name: 'Henk',
+          age: 71,
+          alive: true,
+        },
+        {
+          name: 'John',
+          age: 62,
+          alive: false,
+        },
+        {
+          name: 'Ingrid',
+          age: 77,
+          alive: true,
+        },
+      ];
+
+      *[Symbol.iterator] () {
+        for (const child of this.#children) {
+          if (child.alive === true) {
+            yield child;
+          }
+        }
+      }
+
+    }
+
+    for (const aliveChild of familyTree) {
+      console.log(aliveChild);
+    }
+
   </script>
 </body>
 </html>
